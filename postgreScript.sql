@@ -2,14 +2,13 @@ CREATE TABLE `hero` (
   `id` SERIAL PRIMARY KEY,
   `name` varchar(255),
   `age` INTEGER,
-  `boat_id` INTEGER FOREIGN KEY,
+  `boat_id` INTEGER FOREIGN KEY
 );
 CREATE TABLE `boat` (
   `id` SERIAL PRIMARY KEY,
-  `size` INTEGER NULL,
   `model_id` INTEGER NULL,
   `date_manufacture` DATE NULL,
-  `speed` INTEGER NULL,
+  `rubber_id` INTEGER NULL
 );
 CREATE TABLE `water` (
   `id` SERIAL PRIMARY KEY,
@@ -26,7 +25,9 @@ CREATE TABLE `wind` (
 CREATE TABLE `place` (
   `id` SERIAL PRIMARY KEY,
   `country_id` INTEGER NULL ,
-  `city_id` INTEGER NULL
+  `city_id` INTEGER NULL,
+  `water_id` INETEGER NULL,
+  `wind_id` INTEGER NULL
 );
 		
 CREATE TABLE `rubber` (
@@ -34,8 +35,7 @@ CREATE TABLE `rubber` (
   `name` INTEGER NULL,
   `date_manufacture` DATE NULL,
   `expiration` INTEGER NULL,
-  `melting_point` INTEGER NULL,
-  `boat_id` INTEGER NULL
+  `melting_point` INTEGER NULL
 );
 	
 CREATE TABLE `murmur` (
@@ -47,12 +47,15 @@ CREATE TABLE `coridor` (
   `id` SERIAL PRIMARY KEY,
   `type_id` INTEGER NULL DEFAULT NULL,
   `composition` INTEGER NULL DEFAULT NULL,
-  `size` INTEGER NULL DEFAULT NULL,
+  `size` INTEGER NULL DEFAULT NULL,   
+  `place_id` INTEGER NULL	
 );
 		
 CREATE TABLE `model` (
   `id` SERIAL PRIMARY KEY,
   `model_name` INTEGER NULL,
+  `size` INTEGER NOT NULL,
+  `speed` INTEGER NOT NULL 
 );
 
 CREATE TABLE `type_water` (
@@ -61,7 +64,7 @@ CREATE TABLE `type_water` (
 );
 
 		
-CREATE TABLE `side_stream` (
+CREATE TABLE `stream` (
   `id` SERIAL PRIMARY KEY,
   `stream` INTEGER NULL
 );
@@ -87,9 +90,34 @@ CREATE TABLE `Type_of_Coridor` (
 );
 
 ALTER TABLE hero ADD FOREIGN KEY (boat_id) REFERENCES boat(id);
-ALTER TABLE boat ADD FOREIGN KEY (model_id) REFERENCES `model` (`id`);
-ALTER TABLE water  ADD FOREIGN KEY (type_id) REFERENCES `model` (`id`), ADD FOREIGN KEY (side_stream_id) REFERENCES   `side_stream`(`id`);
+ALTER TABLE boat ADD FOREIGN KEY (model_id) REFERENCES `model` (`id`),
+	ADD FOREIGN KEY (rubber_id) REFERENCES `rubber`(`id`);
+ALTER TABLE water  ADD FOREIGN KEY (type_id) REFERENCES `model` (`id`), 
+	ADD FOREIGN KEY (side_stream_id) REFERENCES   `stream`(`id`);
 ALTER TABLE wind ADD FOREIGN KEY (type_id) REFERENCES  `type_wind`(`id`);
-ALTER TABLE place  ADD FOREIGN KEY (country_id) REFERENCES   `country`(`id`), ADD FOREIGN KEY (city_id) REFERENCES   `city`(`id`);
-ALTER TABLE rubber ADD FOREIGN KEY (boat_id) REFERENCES   `boat`(`id`);
+ALTER TABLE place  ADD FOREIGN KEY (country_id) REFERENCES   `country`(`id`), 
+	ADD FOREIGN KEY (city_id) REFERENCES   `city`(`id`);
+
 ALTER TABLE city ADD FOREIGN KEY (country_id) REFERENCES   `country`(`id`);
+ALTER TABLE corridor ADD FOREIGN KEY (place_id) REFERENCES `place`(`id`);
+
+INSERT INTO rubber VALUES('ni12', 12-20-2002, 2, 3);
+INSERT INTO rubber VALUES('ni212', 12-10-2002, 12, 1);
+INSERT INTO model VALUES('jas22', 122, 12);
+INSERT INTO model VALUES('jas42', 112, 12);
+INSERT INTO country VALUES('Russia');
+INSERT INTO country VALUES('USA');
+INSERT INTO country VALUES('GERMANY');
+INSERT INTO city VALUES('ASTRAKHAN', 1);
+INSERT INTO type_wind VALUES('RIGHT');
+INSERT INTO wind VALUES(1, 111);
+INSERT INTO wind VALUES(1, 123);
+INSERT INTO stream VALUES('Right');
+INSERT INTO type VALUES('sea');
+INSERT INTO water VALUES(1, 11, 1, 22);
+INSERT INTO place VALUES(1,1,1,1);
+INSERT INTO type_of_coridor VALUES('дерево');
+INSERT INTO coridor VALUES('sosos', 112, 1, );
+INSERT INTO place VALUES(1,1,1,1);
+INSERT INTO boat VALUES(1, 20-20-1990, 1, 1);
+INSERT INTO boat VALUES(2, 20-20-1990, 2, 1);

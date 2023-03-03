@@ -16,22 +16,17 @@ CREATE TABLE `water` (
   `type_id` INTEGER NULL,
   `temperature` INTEGER NULL,
   `side_stream_id` INTEGER NULL,
-  `depth` INTEGER NULL,
-  ADD FOREIGN KEY (type_id) REFERENCES `model` (`id`),
-  ADD FOREIGN KEY (side_stream_id) REFERENCES   `side_stream`(`id`)
+  `depth` INTEGER NULL
 );
 CREATE TABLE `wind` (
   `id` SERIAL PRIMARY KEY,
   `type_id` INTEGER NULL,
-  `force_wind` INTEGER NULL,
-  ADD FOREIGN KEY (type_id) REFERENCES   `type`(`id`)
+  `force_wind` INTEGER NULL
 );		
 CREATE TABLE `place` (
   `id` SERIAL PRIMARY KEY,
   `country_id` INTEGER NULL ,
-  `city_id` INTEGER NULL,
-  ADD FOREIGN KEY (country_id) REFERENCES   `country`(`id`),
-  ADD FOREIGN KEY (city_id) REFERENCES   `city`(`id`)
+  `city_id` INTEGER NULL
 );
 		
 CREATE TABLE `rubber` (
@@ -40,8 +35,7 @@ CREATE TABLE `rubber` (
   `date_manufacture` DATE NULL,
   `expiration` INTEGER NULL,
   `melting_point` INTEGER NULL,
-  `boat_id` INTEGER NULL,
-  ADD FOREIGN KEY (boat_id) REFERENCES   `boat`(`id`)
+  `boat_id` INTEGER NULL
 );
 	
 CREATE TABLE `murmur` (
@@ -84,8 +78,7 @@ CREATE TABLE `Country` (
 CREATE TABLE `City` (
   `id` SERIAL PRIMARY KEY,
   `country_id` INTEGER NULL,
-  `name` INTEGER NULL,
-   ADD FOREIGN KEY (country_id) REFERENCES   `country`(`id`)
+  `name` INTEGER NULL
 );
 		
 CREATE TABLE `Type_of_Coridor` (
